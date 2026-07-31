@@ -1,65 +1,138 @@
 import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { getPortfolio } from "@/lib/data";
+import { getPreferences } from "@/lib/preferences";
 
-export default function Home() {
+const testimonials = [
+  {
+    name: "Sophia R.",
+    text: "Every detail felt couture. My bridal makeup stayed flawless for 14 hours and looked perfect in every photo.",
+  },
+  {
+    name: "Emma L.",
+    text: "Elegant, modern, and exactly what I wanted. The process felt premium from consultation to final look.",
+  },
+  {
+    name: "Mila K.",
+    text: "The most refined glam makeup I have ever had. Soft, polished, and still looked like me.",
+  },
+];
+
+export default async function Home() {
+  const { locale } = await getPreferences();
+  const isSr = locale === "sr";
+  const portfolio = await getPortfolio();
+  const featured = portfolio.slice(0, 4);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <div className="fade-in">
+      <section className="section container-px mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-[1.05fr_1fr]">
+        <div>
+          <p className="text-xs uppercase tracking-[0.28em] text-accent">{isSr ? "Luksuzna Makeup Umetnost" : "Luxury Makeup Artistry"}</p>
+          <h1 className="mt-5 text-5xl leading-tight md:text-6xl">
+            {isSr ? "Rafinirana lepota za vaše nezaboravne trenutke." : "Refined beauty for your most unforgettable moments."}
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="mt-6 max-w-xl text-lg text-foreground/75">
+            {isSr
+              ? "Premium bridal, glam, natural i editorial makeup by Luna Atelier. Elegantni finiš, camera-ready koža i bezvremena umetnost."
+              : "Premium bridal, glam, natural, and editorial makeup by Luna Atelier. Elegant finishes, camera-ready skin, and timeless artistry."}
           </p>
+          <div className="mt-8 flex flex-wrap gap-4">
+            <Button href="/booking">{isSr ? "Zakaži termin" : "Book Appointment"}</Button>
+            <Button href="/portfolio" variant="secondary">
+              {isSr ? "Pogledaj portfolio" : "View Portfolio"}
+            </Button>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+        <div className="relative h-[520px] overflow-hidden rounded-[2rem] border border-line elevated">
+          <Image
+            src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1400&q=80"
+            alt="Professional bridal makeup"
+            fill
+            className="object-cover"
+            priority
+          />
         </div>
-      </main>
+      </section>
+
+      <section className="section container-px mx-auto max-w-7xl">
+        <div className="rounded-[2rem] border border-line bg-card p-8 md:p-12">
+          <p className="text-xs uppercase tracking-[0.25em] text-accent">{isSr ? "O meni" : "About"}</p>
+          <h2 className="mt-3 text-4xl">{isSr ? "Personalizovano luksuzno beauty iskustvo." : "A personalized luxury beauty experience."}</h2>
+          <p className="mt-4 max-w-3xl text-foreground/75">
+            {isSr
+              ? "Sa više od 10 godina iskustva u bridal, fashion i editorial beauty svetu, Luna spaja tehničku preciznost i intuitivan pristup fokusiran na zdravu i blistavu kožu."
+              : "With over 10 years of artistry in bridal, fashion, and editorial beauty, Luna combines technical precision with an intuitive, skin-first approach to elevate your natural features."}
+          </p>
+          <Button href="/about" variant="secondary" className="mt-6">
+            {isSr ? "Upoznajte moju priču" : "Discover My Story"}
+          </Button>
+        </div>
+      </section>
+
+      <section className="section container-px mx-auto max-w-7xl">
+        <div className="mb-7 flex items-end justify-between gap-4">
+          <div>
+            <p className="text-xs uppercase tracking-[0.25em] text-accent">Portfolio</p>
+            <h2 className="mt-2 text-4xl">{isSr ? "Istaknuti makeup look-ovi" : "Featured Makeup Looks"}</h2>
+          </div>
+          <Button href="/portfolio" variant="ghost">
+            {isSr ? "Ceo portfolio" : "Full Portfolio"}
+          </Button>
+        </div>
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {featured.map((item) => (
+            <article key={item.id} className="overflow-hidden rounded-3xl border border-line bg-card">
+              <div className="relative h-72">
+                <Image src={item.imageUrl} alt={item.title} fill className="object-cover" />
+              </div>
+              <div className="p-4">
+                <p className="text-xs uppercase tracking-[0.18em] text-accent">{item.category.replace("_", " ")}</p>
+                <h3 className="mt-2 text-lg">{item.title}</h3>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="section container-px mx-auto max-w-7xl">
+        <p className="text-xs uppercase tracking-[0.25em] text-accent">{isSr ? "Utisci klijenata" : "Testimonials"}</p>
+        <h2 className="mt-2 text-4xl">{isSr ? "Omiljena među mlada-ma i modernim beauty klijentima." : "Loved by brides and modern beauty clients."}</h2>
+        <div className="mt-8 grid gap-5 md:grid-cols-3">
+          {testimonials.map((testimonial) => (
+            <article key={testimonial.name} className="rounded-3xl border border-line bg-card p-6">
+              <p className="text-foreground/80">{testimonial.text}</p>
+              <p className="mt-4 text-sm font-semibold">{testimonial.name}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="section container-px mx-auto max-w-7xl">
+        <div className="rounded-[2rem] border border-line bg-champagne p-8 md:p-12">
+          <h2 className="text-4xl">{isSr ? "Pratite najnovije look-ove na Instagramu" : "Follow the latest looks on Instagram"}</h2>
+          <p className="mt-3 text-foreground/75">
+            {isSr ? "Behind-the-scenes bridal jutra, editorijali i beauty transformacije." : "Behind-the-scenes bridal mornings, editorials, and beauty transformations."}
+          </p>
+          <Button href="https://instagram.com" className="mt-6">
+            @lunaatelierbeauty
+          </Button>
+        </div>
+      </section>
+
+      <section className="section container-px mx-auto max-w-7xl pt-0">
+        <div className="rounded-[2rem] border border-line bg-foreground p-10 text-background">
+          <h2 className="text-4xl">{isSr ? "Rezervišite svoj termin" : "Reserve your appointment"}</h2>
+          <p className="mt-3 max-w-2xl text-background/80">
+            {isSr
+              ? "Obezbedite svoj datum za bridal događaje, editorial projekte i makeup za posebne prilike."
+              : "Secure your date for bridal events, editorial projects, and elevated occasion makeup."}
+          </p>
+          <Button href="/booking" variant="secondary" className="mt-6 border-background bg-background text-foreground">
+            {isSr ? "Zakaži termin" : "Book Appointment"}
+          </Button>
+        </div>
+      </section>
     </div>
   );
 }
