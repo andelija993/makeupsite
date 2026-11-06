@@ -10,7 +10,7 @@ npm run dev      # http://localhost:3000
 
 ## Najčešće izmene
 - **Telefon, Instagram, gradovi:** `src/lib/site.ts`
-- **Galerija:** ubacite slike u `public/media/foto/`, video u `public/media/video/` – sajt ih sam prikazuje (najnovije prvo po imenu fajla).
+- **Galerija:** svaka objava je jedan album – folder `public/media/<GGGG-MM-DD>-<id>/` sa fajlovima `01.jpg`, `02.mp4`… i opcionim `opis.txt`. Na početnoj strani su samo radovi navedeni u `public/media/izdvojeno.txt` (ime foldera po redu), a svi radovi su na strani `/portfolio`. Instagram izvoz se ubacuje komandom `python3 scripts/import-instagram.py <raspakovan-izvoz> public/media`.
 - **Boje (tamna/svetla tema):** `src/app/globals.css`
 
 ## Rezervacije

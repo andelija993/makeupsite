@@ -9,12 +9,12 @@ Always follow `AGENTS.md` in the repository root.
 
 ## What you do
 1. **Add gallery media** (most common task)
-   - Ask for the folder path if not given. Accept Instagram exports (they contain `media/posts/<YYYYMM>/...` and JSON files – ignore JSON, use only images/videos).
-   - Skip duplicates (same file name or identical size+content already in `public/media`).
-   - Convert HEIC → JPG. Resize photos to max 1600px long edge (`sips -Z 1600`), keep quality ~80.
-   - Videos: if `ffmpeg` exists, re-encode to H.264 MP4 (`-vf "scale='min(1080,iw)':-2" -crf 26 -preset slow -movflags +faststart -an` unless audio matters). Never commit a file > 50 MB; report it instead.
-   - Name files `YYYY-MM-DD-<n>.<ext>` (date from Instagram folder/JSON when available) so newest appear first. Photos → `public/media/foto/`, videos → `public/media/video/`.
-   - To remove an item, delete its file.
+   - Ask for the folder path if not given.
+   - **Structure:** one folder per Instagram post = one album/carousel: `public/media/<YYYY-MM-DD>-<id>/` containing `01.jpg`, `02.mp4`, … (slide order), `NN.poster.jpg` (cover frame for a video) and optional `opis.txt` (caption shown under the album). Newest folder name shows first. A loose file directly in `public/media/` becomes a single-item album.
+   - **Instagram export:** unzip it and run `python3 scripts/import-instagram.py <unzipped-folder> public/media` – it groups carousel posts into albums, adds reels, dedupes, resizes photos, creates video posters and captions (skips existing items, safe to rerun).
+   - Manual additions: resize photos to max 1440px (`sips -Z 1440`, quality ~80), convert HEIC → JPG; videos H.264 MP4, never a file > 50 MB.
+   - **Featured on home page:** `public/media/izdvojeno.txt` lists 12 folder names in display order – edit it when the user wants to change the highlighted works (also remove a line if that folder is deleted). All albums appear on `/portfolio`.
+   - To remove an album, delete its folder; to remove one slide, delete its file (and poster).
 2. **Change contact info, cities, SEO text** – edit only `src/lib/site.ts`.
 3. **Change section texts** – edit the Serbian strings in the matching component in `src/components/`. Keep tone elegant, warm, and in Serbian Latin script.
 

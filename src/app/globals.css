@@ -103,6 +103,48 @@ body {
   animation: fade-up 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
 }
 
+/* iOS Safari: polja za datum/vreme inače izlaze van okvira forme */
+input[type="date"],
+input[type="time"] {
+  -webkit-appearance: none;
+  appearance: none;
+  min-width: 0;
+  min-height: 3.25rem;
+}
+
+input::-webkit-date-and-time-value {
+  text-align: left;
+}
+
+/* Pregled albuma: pozadina i kontrole se nežno pojavljuju/nestaju */
+@keyframes viewer-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes viewer-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+.viewer-backdrop {
+  animation: viewer-fade 0.6s ease both;
+  transition: opacity 0.45s ease;
+}
+
+.viewer-chrome {
+  animation: viewer-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
+  transition: opacity 0.25s ease;
+}
+
+.viewer[data-closing] .viewer-backdrop,
+.viewer[data-closing] .viewer-chrome {
+  opacity: 0;
+}
+
 @keyframes marquee {
   to {
     transform: translateX(-50%);
@@ -144,6 +186,8 @@ body {
   .animate-marquee,
   .animate-spin-slow,
   .fade-up,
+  .viewer-backdrop,
+  .viewer-chrome,
   .animate-float {
     animation: none;
   }

@@ -33,7 +33,7 @@ export function MobileBar() {
     >
       <div className="flex gap-3">
         <a
-          href="#rezervacija"
+          href="/#rezervacija"
           className="flex flex-1 items-center justify-center gap-2 rounded-full bg-gold py-3.5 text-xs uppercase tracking-[0.22em] text-gold-fg"
         >
           <Sparkle className="size-3" /> Zakaži termin

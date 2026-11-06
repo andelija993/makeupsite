@@ -6,10 +6,11 @@ import { Logo } from "./brand";
 import { ThemeToggle } from "./theme-toggle";
 
 const nav = [
-  { href: "#o-meni", label: "O meni" },
-  { href: "#galerija", label: "Galerija" },
-  { href: "#rezervacija", label: "Rezervacija" },
-  { href: "#kontakt", label: "Kontakt" },
+  { href: "/#o-meni", label: "O meni" },
+  { href: "/#galerija", label: "Galerija" },
+  { href: "/portfolio", label: "Portfolio" },
+  { href: "/#rezervacija", label: "Rezervacija" },
+  { href: "/#kontakt", label: "Kontakt" },
 ];
 
 export function Navbar() {
@@ -34,7 +35,7 @@ export function Navbar() {
       }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-5 md:px-10">
-        <a href="#" aria-label="Početak" className="text-[15px]" onClick={() => setOpen(false)}>
+        <a href="/#" aria-label="Početak" className="text-[15px]" onClick={() => setOpen(false)}>
           <Logo />
         </a>
 
@@ -54,7 +55,7 @@ export function Navbar() {
         <div className="flex items-center gap-3">
           <ThemeToggle />
           <a
-            href="#rezervacija"
+            href="/#rezervacija"
             className="hidden rounded-full bg-fg px-5 py-2.5 text-xs uppercase tracking-[0.2em] text-bg transition hover:bg-gold hover:text-gold-fg md:inline-block"
           >
             Zakaži termin
@@ -86,7 +87,7 @@ export function Navbar() {
             ))}
             <li>
               <a
-                href="#rezervacija"
+                href="/#rezervacija"
                 onClick={() => setOpen(false)}
                 className="mt-4 inline-block rounded-full bg-gold px-8 py-3.5 text-xs uppercase tracking-[0.25em] text-gold-fg"
               >

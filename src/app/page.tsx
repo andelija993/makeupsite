@@ -6,10 +6,10 @@ import { Gallery } from "@/components/gallery";
 import { Booking } from "@/components/booking";
 import { Footer } from "@/components/footer";
 import { MobileBar } from "@/components/mobile-bar";
-import { getMedia } from "@/lib/media";
+import { getAlbums, getFeatured } from "@/lib/media";
 
 export default function Home() {
-  const media = getMedia();
+  const albums = getAlbums();
 
   return (
     <>
@@ -18,7 +18,7 @@ export default function Home() {
         <Hero />
         <Marquee />
         <About />
-        <Gallery items={media} />
+        <Gallery featured={getFeatured(albums)} />
         <Booking />
       </main>
       <Footer />

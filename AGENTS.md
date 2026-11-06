@@ -28,9 +28,9 @@ One-page, mobile-first site for a makeup artist working in **Vlasotince** and **
 | Portrait / logo | `public/logo.png` |
 
 ## Gallery media
-- Photos go in `public/media/foto/`, videos in `public/media/video/` (subfolders allowed). `src/lib/media.ts` scans them at build time; sorted by file path descending (name files `YYYY-MM-DD-...` so newest shows first).
+- Gallery = albums: each `public/media/<YYYY-MM-DD>-<id>/` folder is one post shown as a carousel (`01.jpg`, `02.mp4`, `NN.poster.jpg`, optional `opis.txt` caption). `src/lib/media.ts` scans at build time, newest folder first. Instagram exports are imported with `python3 scripts/import-instagram.py <export> public/media`. The animated album viewer is `src/components/album-viewer.tsx`. The home page shows only the 12 albums listed in `public/media/izdvojeno.txt` (one folder name per line, in display order); everything is shown on `/portfolio` (`src/app/portfolio/page.tsx`), grouped by year.
 - Supported: jpg, jpeg, png, webp, avif, gif / mp4, webm, mov, m4v. HEIC is **not** supported – convert first.
-- Before adding media, optimize: photos max ~1600px long edge, JPEG/WebP quality ~80; videos H.264 MP4, max ~1080px, no file over ~20 MB (GitHub hard limit is 100 MB). On macOS `sips` works for photos; use `ffmpeg` for video if available.
+- Before adding media, optimize: photos max ~1440px long edge, JPEG/WebP quality ~80; videos H.264 MP4, max ~1080px, no file over ~20 MB (GitHub hard limit is 100 MB). On macOS `sips` works for photos; use `ffmpeg` for video if available.
 
 ## Commands
 - `npm run dev` – local server (http://localhost:3000)

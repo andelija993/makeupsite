@@ -12,7 +12,7 @@ type Status = "idle" | "sending" | "sent" | "failed";
 const empty: Form = { city: "", date: "", time: "", name: "", phone: "", note: "" };
 
 const field =
-  "w-full rounded-2xl border border-line bg-bg px-4 py-3.5 text-base text-fg outline-none transition placeholder:text-fg-soft/60 focus:border-gold focus:ring-4 focus:ring-gold/15";
+  "block w-full min-w-0 max-w-full appearance-none rounded-2xl border border-line bg-bg px-4 py-3.5 text-base text-fg outline-none transition placeholder:text-fg-soft/60 focus:border-gold focus:ring-4 focus:ring-gold/15";
 const label = "mb-2 block text-[11px] uppercase tracking-[0.2em] text-fg-soft";
 const optional = <span className="normal-case tracking-normal">(opciono)</span>;
 
@@ -88,7 +88,7 @@ export function Booking() {
   }
 
   return (
-    <section id="rezervacija" className="relative overflow-hidden py-24 md:py-32">
+    <section id="rezervacija" className="relative overflow-hidden pt-16 pb-24 md:pt-24 md:pb-32">
       <div aria-hidden className="pointer-events-none absolute left-1/2 top-1/3 -z-10 size-[40rem] -translate-x-1/2 rounded-full bg-[var(--glow)] blur-3xl" />
       <div className="mx-auto max-w-3xl px-4 md:px-10">
         <Reveal>
@@ -160,7 +160,7 @@ export function Booking() {
                   </div>
                 </fieldset>
 
-                <div className="mt-6 grid gap-5 sm:grid-cols-2">
+                <div className="mt-6 grid gap-5 sm:grid-cols-2 [&>*]:min-w-0">
                   <div>
                     <label htmlFor="date" className={label}>
                       Datum
