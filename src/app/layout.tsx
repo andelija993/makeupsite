@@ -1,79 +1,49 @@
-import type { Metadata } from "next";
-import { Manrope, Playfair_Display } from "next/font/google";
-import Script from "next/script";
+import type { Metadata, Viewport } from "next";
+import { Allura, Cormorant_Garamond, Manrope } from "next/font/google";
 import "./globals.css";
-import { siteConfig } from "@/lib/constants";
-import { Navbar } from "@/components/layout/navbar";
-import { Footer } from "@/components/layout/footer";
-import { Providers } from "./providers";
-import { getPreferences } from "@/lib/preferences";
+import { site } from "@/lib/site";
 
-const manrope = Manrope({
-  variable: "--font-manrope",
-  subsets: ["latin"],
+const body = Manrope({ variable: "--font-body", subsets: ["latin", "latin-ext"] });
+const display = Cormorant_Garamond({
+  variable: "--font-display",
+  subsets: ["latin", "latin-ext"],
+  weight: ["300", "400", "500", "600"],
+  style: ["normal", "italic"],
 });
-
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
-  subsets: ["latin"],
-});
+const script = Allura({ variable: "--font-script", subsets: ["latin", "latin-ext"], weight: "400" });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteConfig.url),
-  title: {
-    default: siteConfig.title,
-    template: `%s | ${siteConfig.name}`,
-  },
-  description: siteConfig.description,
+  metadataBase: new URL(site.url),
+  title: site.title,
+  description: site.description,
   openGraph: {
-    title: siteConfig.title,
-    description: siteConfig.description,
+    title: site.title,
+    description: site.description,
     type: "website",
-    url: siteConfig.url,
-    siteName: siteConfig.name,
-    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: siteConfig.name }],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: siteConfig.title,
-    description: siteConfig.description,
-    images: ["/opengraph-image"],
+    locale: "sr_RS",
+    siteName: site.name,
+    images: [{ url: "/logo.png", width: 1000, height: 1000, alt: site.name }],
   },
 };
 
-export default async function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  const { locale, theme } = await getPreferences();
+export const viewport: Viewport = {
+  themeColor: "#120e0c",
+};
 
+// Tamna tema je podrazumevana; svetla se koristi samo ako je posetilac izabere.
+const themeScript = `(function(){try{document.documentElement.classList.toggle("dark",localStorage.getItem("theme")!=="light")}catch(e){}})()`;
+
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html
-      lang={locale}
-      className={`${manrope.variable} ${playfair.variable} h-full antialiased ${theme === "dark" ? "dark" : ""}`}
+      lang="sr-Latn"
+      suppressHydrationWarning
+      className={`dark ${body.variable} ${display.variable} ${script.variable} antialiased`}
     >
-      <body className="min-h-full flex flex-col">
-        <Providers>
-          <Navbar />
-          <main className="flex-1">{children}</main>
-          <Footer />
-        </Providers>
-        {process.env.NEXT_PUBLIC_GA_ID ? (
-          <>
-            <Script
-              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
-              strategy="afterInteractive"
-            />
-            <Script id="ga-init" strategy="afterInteractive">
-              {`window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}');`}
-            </Script>
-          </>
-        ) : null}
-      </body>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
+      <body className="min-h-dvh font-sans">{children}</body>
     </html>
   );
 }

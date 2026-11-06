@@ -1,77 +1,150 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
-  --background: #fcfaf7;
-  --foreground: #171211;
-  --muted: #efe7de;
-  --line: #dacdbf;
-  --accent: #c6a67f;
-  --champagne: #f3e5d3;
-  --card: #fffcf9;
+  --bg: #faf6f1;
+  --bg-soft: #f3eae0;
+  --card: #fffdfa;
+  --fg: #2a1f1a;
+  --fg-soft: #76655b;
+  --line: #e6d8cb;
+  --gold: #b07f62;
+  --gold-soft: #d9b8a1;
+  --gold-fg: #fffaf5;
+  --glow: rgba(214, 170, 140, 0.35);
+  color-scheme: light;
 }
 
-html.dark {
-  --background: #120f0d;
-  --foreground: #fff7ef;
-  --muted: #2d2621;
-  --line: #5a4a3f;
-  --accent: #e5be93;
-  --champagne: #221914;
-  --card: #1a1512;
+.dark {
+  --bg: #120e0c;
+  --bg-soft: #1b1512;
+  --card: #1f1815;
+  --fg: #f6ece4;
+  --fg-soft: #b3a195;
+  --line: #3a2d26;
+  --gold: #d6a98a;
+  --gold-soft: #8a6450;
+  --gold-fg: #1a120e;
+  --glow: rgba(176, 127, 98, 0.22);
+  color-scheme: dark;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-muted: var(--muted);
-  --color-line: var(--line);
-  --color-accent: var(--accent);
-  --color-champagne: var(--champagne);
+  --color-bg: var(--bg);
+  --color-bg-soft: var(--bg-soft);
   --color-card: var(--card);
-  --font-sans: var(--font-manrope);
-  --font-display: var(--font-playfair);
+  --color-fg: var(--fg);
+  --color-fg-soft: var(--fg-soft);
+  --color-line: var(--line);
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+  --color-gold-fg: var(--gold-fg);
+  --font-sans: var(--font-body);
+  --font-serif: var(--font-display);
+  --font-script: var(--font-script);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-manrope), sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  transition: background-color 0.5s ease, color 0.5s ease;
 }
 
-h1,
-h2,
-h3,
-h4 {
-  font-family: var(--font-playfair), serif;
+::selection {
+  background: var(--gold-soft);
+  color: var(--fg);
 }
 
-.container-px {
-  @apply px-6 md:px-10 lg:px-16;
+.text-gradient-gold {
+  background: linear-gradient(120deg, #8f5f46 0%, #d9ac8c 45%, #f3d7c2 55%, #b07f62 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
-.section {
-  @apply py-16 md:py-24;
+.dark .text-gradient-gold {
+  background-image: linear-gradient(120deg, #b98468 0%, #f1cdb3 45%, #fff0e4 55%, #d6a98a 100%);
 }
 
-.glass {
-  @apply bg-white/80 dark:bg-card/90 backdrop-blur border border-line/60;
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-.elevated {
-  box-shadow: 0 12px 40px -24px rgba(23, 18, 17, 0.35);
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.9s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
-.fade-in {
-  animation: fadeIn 0.6s ease-out;
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
 }
 
-@keyframes fadeIn {
+@keyframes fade-up {
   from {
     opacity: 0;
-    transform: translateY(6px);
+    transform: translateY(16px);
   }
+}
+
+.fade-up {
+  animation: fade-up 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes marquee {
   to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 40s linear infinite;
+}
+
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 40s linear infinite;
+}
+
+@keyframes float {
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-float {
+  animation: float 7s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
+  }
+  .animate-marquee,
+  .animate-spin-slow,
+  .fade-up,
+  .animate-float {
+    animation: none;
   }
 }
