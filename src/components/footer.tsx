@@ -1,6 +1,6 @@
 import { MapPin, Phone } from "lucide-react";
 import { links, site } from "@/lib/site";
-import { Divider, Logo } from "./brand";
+import { Divider, Logo, Sparkle } from "./brand";
 import { InstagramIcon, ViberIcon, WhatsAppIcon } from "./icons";
 
 const contacts = [
@@ -36,10 +36,39 @@ export function Footer() {
           ))}
         </ul>
 
-        <p className="mt-12 text-xs text-fg-soft">
-          © {new Date().getFullYear()} {site.name}. Sva prava zadržana.
-        </p>
+        <div className="mt-14 flex w-full max-w-md flex-col items-center gap-5">
+          <div className="flex w-full items-center gap-4 text-gold/70" aria-hidden>
+            <span className="h-px flex-1 bg-gradient-to-r from-transparent to-line" />
+            <Sparkle className="size-2.5" />
+            <span className="h-px flex-1 bg-gradient-to-l from-transparent to-line" />
+          </div>
+
+          <Credit />
+
+          <p className="text-[10px] uppercase tracking-[0.3em] text-fg-soft/60">
+            © {new Date().getFullYear()} {site.name} · Sva prava zadržana
+          </p>
+        </div>
       </div>
     </footer>
+  );
+}
+
+function Credit() {
+  const inner = (
+    <>
+      <span className="text-[10px] uppercase tracking-[0.35em] text-fg-soft/70">Dizajn i izrada sajta</span>
+      <span className="font-script text-3xl leading-none text-gradient-gold transition duration-500 group-hover:tracking-wide">
+        {site.author.name}
+      </span>
+    </>
+  );
+  const cls = "group flex flex-col items-center gap-1.5";
+  return site.author.url ? (
+    <a href={site.author.url} target="_blank" rel="noreferrer" className={cls}>
+      {inner}
+    </a>
+  ) : (
+    <p className={cls}>{inner}</p>
   );
 }
