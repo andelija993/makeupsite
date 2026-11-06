@@ -7,7 +7,7 @@ export const site = {
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://muajulijanesic.rs",
   phone: "+381621737511",
   phoneDisplay: "+381 62 173 7511",
-  instagram: "muajulijanesic",
+  instagram: "mua.julijanesic",
   cities: ["Vlasotince", "Beograd"],
   // Besplatan ključ sa https://web3forms.com – upiti iz forme stižu na nesicjulija030@gmail.com (ključ nije tajna).
   bookingFormKey: process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? "b99bb9a8-1d54-4297-a950-3393027a5883",
